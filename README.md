@@ -17,3 +17,5 @@ Components are pure data which can be associated to an entity. There can be many
 ## Resources
 Unlike components, resources are unique pieces of data which can be accessed globally in your application.
 
+# Creating Plugins
+Creating a plugin is simple, just go to https://github.com/Thoomas247/AlloyPluginTemplate and select "Use this template". The template repository contains more info on how to proceed.
