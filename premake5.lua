@@ -17,7 +17,7 @@ workspace ("AlloyCore_workspace")
 -- Include Directories Table --
 IncludeDirs = {}
 
-IncludeDirs["Plugin"] = "lib/AlloyCore/src"
+IncludeDirs["Plugin"] = "lib/AlloyCore/src/AlloyCore"
 IncludeDirs["External"] = "lib/AlloyCore/external"
 IncludeDirs["Test"] = "lib/Test/src"
 
