@@ -4,6 +4,7 @@
 #include "AppState.hpp"
 #include "AlloyCore/scheduler/System.hpp"
 #include "AlloyCore/resource/Resource.hpp"
+#include "AlloyCore/ecs/Component.hpp"
 
 namespace Alloy
 {

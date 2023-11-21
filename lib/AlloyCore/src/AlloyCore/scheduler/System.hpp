@@ -64,7 +64,7 @@ namespace Alloy::Internal
 			}
 
 			// resources
-			else if constexpr (std::is_base_of_v<Resource, T>)
+			else if constexpr (std::is_base_of_v<Resource, ResType::Stripped<T>>)
 			{
 				return appState.ResourceList.GetResource<T>();
 			}

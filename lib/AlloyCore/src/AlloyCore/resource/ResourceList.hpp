@@ -61,7 +61,7 @@ namespace Alloy::Internal
 		template <typename T>
 		T& GetResource()
 		{
-			static_assert(std::is_base_of_v<Resource, T>, "T must be a Resource!");
+			static_assert(std::is_base_of_v<Resource, ResType::Stripped<T>>, "T must be a Resource!");
 
 			ASSERT(m_Resources.contains(ResType::ID<T>()), "Resource does not exist!");
 

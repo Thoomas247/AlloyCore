@@ -2,10 +2,15 @@
 #include "AlloyCore/standard.hpp"
 
 #include "EntityID.hpp"
+#include "Component.hpp"
 #include "AlloyCore/type/TypeID.hpp"
 
 namespace Alloy::Internal
 {
+	// forward declarations
+	class ComponentRegistry;
+	class SystemInputs;
+
 	/// <summary>
 	/// Used to eveluate whether we need an entt::view or entt::group to iterate over the given components.
 	/// When we have more than one component to write or read to, we use a group.
@@ -39,12 +44,15 @@ namespace Alloy
 	template <typename... Components>
 	class Query
 	{
+		static_assert(sizeof...(Components) > 0, "Query must have at least one component!");
+		static_assert((std::is_base_of_v<Component, Components> && ...), "Components must derive from Component!");
+
 	public:
 		class Iterator;
 
 	public:
 		template<typename... Components>
-		std::tuple<Components&...> Get(EntityID entityID)
+		auto Get(EntityID entityID)
 		{
 			return m_Accessor.get<Components...>(entityID);
 		}
@@ -60,8 +68,8 @@ namespace Alloy
 		}
 
 	private:
-		friend class ComponentRegistry;
-		friend class Application;
+		friend class Internal::ComponentRegistry;
+		friend class Internal::SystemInputs;
 
 		using EnttGetType = Internal::EnttAccessorType<sizeof...(Components), Components...>::Get;	// used by ComponentRegistry
 		using EnttAccessor = Internal::EnttAccessorType<sizeof...(Components), Components...>::Type;	// used by ComponentRegistry
@@ -72,14 +80,14 @@ namespace Alloy
 		EnttAccessor m_Accessor;
 
 	private:
-		static constexpr void IsQuery() {}	// used by Application
+		static constexpr void IsQuery() {}	// used by SystemInputs
 
-		static constexpr std::vector<size_t> GetReadIDs()	// used by Application
+		static constexpr std::vector<size_t> GetReadIDs()	// used by SystemInputs
 		{
 			return { getIDIfRead<Components>()... };
 		}
 
-		static constexpr std::vector<size_t> GetWriteIDs()	// used by Application
+		static constexpr std::vector<size_t> GetWriteIDs()	// used by SystemInputs
 		{
 			return { getIDIfWrite<Components>()... };
 		}

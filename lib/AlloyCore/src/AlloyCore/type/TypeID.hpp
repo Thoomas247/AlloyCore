@@ -13,12 +13,12 @@ namespace Alloy
 	{
 	public:
 		template <class T>
-		using Strip = std::remove_const_t<std::remove_reference_t<std::remove_const_t<T>>>;
+		using Stripped = std::remove_const_t<std::remove_reference_t<std::remove_const_t<T>>>;
 
 		template <class T>
 		static size_t ID()
 		{
-			return getID<Strip<T>>();
+			return getID<Stripped<T>>();
 		}
 
 	private:
