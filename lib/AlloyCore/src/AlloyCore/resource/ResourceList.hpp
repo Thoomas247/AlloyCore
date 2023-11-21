@@ -1,8 +1,8 @@
 #pragma once
-#include "standard.hpp"
+#include "AlloyCore/standard.hpp"
 
-#include "log/Log.hpp"
-#include "type/TypeID.hpp"
+#include "AlloyCore/log/Log.hpp"
+#include "AlloyCore/type/TypeID.hpp"
 #include "Resource.hpp"
 
 namespace Alloy::Internal

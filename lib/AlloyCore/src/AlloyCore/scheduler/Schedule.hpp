@@ -1,8 +1,8 @@
 #pragma once
-#include "standard.hpp"
+#include "AlloyCore/standard.hpp"
 
 #include "Stage.hpp"
-#include "log/Log.hpp"
+#include "AlloyCore/log/Log.hpp"
 
 namespace Alloy::Internal
 {

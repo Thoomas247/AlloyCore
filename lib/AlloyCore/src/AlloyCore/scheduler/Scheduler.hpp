@@ -1,8 +1,8 @@
 #pragma once
-#include "standard.hpp"
+#include "AlloyCore/standard.hpp"
 
-#include "log/Log.hpp"
-#include "resource/Resource.hpp"
+#include "AlloyCore/log/Log.hpp"
+#include "AlloyCore/resource/Resource.hpp"
 #include "System.hpp"
 #include "Stage.hpp"
 #include "Schedule.hpp"

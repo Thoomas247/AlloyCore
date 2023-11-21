@@ -1,11 +1,11 @@
 #pragma once
-#include "standard.hpp"
+#include "AlloyCore/standard.hpp"
 
-#include "type/TypeID.hpp"
+#include "AlloyCore/type/TypeID.hpp"
 #include "StageInputs.hpp"
-#include "ecs/Query.hpp"
-#include "ecs/ComponentRegistry.hpp"
-#include "resource/Resource.hpp"
+#include "AlloyCore/ecs/Query.hpp"
+#include "AlloyCore/ecs/ComponentRegistry.hpp"
+#include "AlloyCore/resource/Resource.hpp"
 
 namespace Alloy
 {

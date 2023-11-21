@@ -1,5 +1,5 @@
 #pragma once
-#include "standard.hpp"
+#include "AlloyCore/standard.hpp"
 
 #include "spdlog/spdlog.h"
 #include "spdlog/sinks/stdout_color_sinks.h"

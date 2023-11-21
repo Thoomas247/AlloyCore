@@ -1,8 +1,8 @@
 #pragma once
-#include "standard.hpp"
+#include "AlloyCore/standard.hpp"
 
 #include "EntityID.hpp"
-#include "type/TypeID.hpp"
+#include "AlloyCore/type/TypeID.hpp"
 
 namespace Alloy::Internal
 {

@@ -2,7 +2,7 @@
 
 #include "entt/entt.hpp"
 
-#include "log/Log.hpp"
+#include "AlloyCore/log/Log.hpp"
 #include "EntityID.hpp"
 #include "Query.hpp"
 

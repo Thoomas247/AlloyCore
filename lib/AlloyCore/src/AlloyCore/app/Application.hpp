@@ -1,8 +1,9 @@
 #pragma once
-#include "standard.hpp"
+#include "AlloyCore/standard.hpp"
 
 #include "AppState.hpp"
-#include "scheduler/System.hpp"
+#include "AlloyCore/scheduler/System.hpp"
+#include "AlloyCore/resource/Resource.hpp"
 
 namespace Alloy
 {

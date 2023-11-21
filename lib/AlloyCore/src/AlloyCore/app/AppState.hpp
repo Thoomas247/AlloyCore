@@ -1,10 +1,10 @@
 #pragma once
-#include "standard.hpp"
+#include "AlloyCore/standard.hpp"
 
-#include "plugin/Plugin.hpp"
-#include "resource/ResourceList.hpp"
-#include "ecs/ComponentRegistry.hpp"
-#include "scheduler/Scheduler.hpp"
+#include "AlloyCore/plugin/Plugin.hpp"
+#include "AlloyCore/resource/ResourceList.hpp"
+#include "AlloyCore/ecs/ComponentRegistry.hpp"
+#include "AlloyCore/scheduler/Scheduler.hpp"
 
 namespace Alloy::Internal
 {

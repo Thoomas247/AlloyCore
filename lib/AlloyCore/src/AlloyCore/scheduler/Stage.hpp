@@ -1,5 +1,5 @@
 #pragma once
-#include "standard.hpp"
+#include "AlloyCore/standard.hpp"
 
 #include "System.hpp"
 #include "StageInputs.hpp"
