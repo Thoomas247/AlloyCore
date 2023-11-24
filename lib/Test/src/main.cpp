@@ -10,6 +10,11 @@ struct TestComponent : public Alloy::Component
 {
 	int x;
 	int y;
+
+	TestComponent(int x, int y)
+		: x(x), y(y)
+	{
+	}
 };
 
 void TestSystem(const TestResource& resource)
@@ -60,9 +65,25 @@ public:
 	}
 };
 
+
+#include "AlloyCore/commands/Commands.hpp"
+
 int main()
 {
 	Alloy::Application app;
+
+	/*--------------------------------------------------------*/
+	Alloy::Internal::AppState appState;
+	appState.ResourceList.AddResource<TestResource>();
+
+	Alloy::Internal::CommandList commandList;
+	Alloy::Commands commands = Alloy::Commands(commandList, appState);
+
+	commands.SpawnEntity().AddComponent<TestComponent>(10, 20);
+
+	commandList.Run(appState);
+
+	/*--------------------------------------------------------*/
 
 	app.AddPlugin<TestPlugin>();
 

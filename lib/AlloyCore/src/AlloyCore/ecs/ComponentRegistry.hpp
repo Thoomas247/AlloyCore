@@ -38,32 +38,32 @@ namespace Alloy::Internal
 			}
 		}
 
-		template<typename... _Components>
+		template<typename... Components>
 		bool HasComponents(EntityID entityID)
 		{
-			return m_Registry.all_of<_Components...>(entityID);
+			return m_Registry.all_of<Components...>(entityID);
 		}
 
-		template<typename _Component, typename... _Args>
-		_Component& AddComponent(EntityID entityID, _Args&&... args)
+		template<typename Component, typename... Args>
+		Component& AddComponent(EntityID entityID, Args&&... args)
 		{
-			AL_ASSERT(!HasComponents<_Component>(entityID), "Entity already has component!");
-			return m_Registry.emplace<_Component>(entityID, std::forward<_Args>(args)...);
+			ASSERT(!HasComponents<Component>(entityID), "Entity already has component!");
+			return m_Registry.emplace<Component>(entityID, std::forward<Args>(args)...);
 		}
 
-		template<typename _Component>
-		_Component& GetComponent(EntityID entityID)
+		template<typename Component>
+		Component& GetComponent(EntityID entityID)
 		{
-			AL_ASSERT(HasComponents<_Component>(entityID), "Entity does not contain component!");
-			return m_Registry.get<_Component>(entityID);
+			ASSERT(HasComponents<Component>(entityID), "Entity does not contain component!");
+			return m_Registry.get<Component>(entityID);
 		}
 
-		template<typename _Component>
+		template<typename Component>
 		void RemoveComponent(EntityID entityID)
 		{
-			AL_ASSERT(HasComponents<_Component>(entityID), "Entity does not contain component!");
+			ASSERT(HasComponents<Component>(entityID), "Entity does not contain component!");
 
-			m_Registry.remove<_Component>(entityID);
+			m_Registry.remove<Component>(entityID);
 		}
 
 	private:

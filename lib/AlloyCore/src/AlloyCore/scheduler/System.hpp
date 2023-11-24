@@ -54,7 +54,7 @@ namespace Alloy::Internal
 			// query
 			if constexpr (requires() { T::IsQuery(); })
 			{
-				return appState.ComponentRegistry.GetQuery<T>();
+				return appState.Scene.GetQuery<T>();
 			}
 
 			// commands

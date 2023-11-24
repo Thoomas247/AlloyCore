@@ -3,8 +3,8 @@
 
 #include "AlloyCore/plugin/Plugin.hpp"
 #include "AlloyCore/resource/ResourceList.hpp"
-#include "AlloyCore/ecs/ComponentRegistry.hpp"
 #include "AlloyCore/scheduler/Scheduler.hpp"
+#include "AlloyCore/scene/Scene.hpp"
 
 namespace Alloy::Internal
 {
@@ -17,6 +17,6 @@ namespace Alloy::Internal
 		Scheduler Scheduler;
 		ResourceList ResourceList;
 
-		ComponentRegistry ComponentRegistry;	// TODO: scenes should own this
+		Scene Scene;
 	};
 }
