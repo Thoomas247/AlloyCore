@@ -4,6 +4,7 @@
 #include "AlloyCore/plugin/Plugin.hpp"
 #include "AlloyCore/resource/ResourceList.hpp"
 #include "AlloyCore/scheduler/Scheduler.hpp"
+#include "AlloyCore/commands/CommandList.hpp"
 #include "AlloyCore/scene/Scene.hpp"
 
 namespace Alloy::Internal
@@ -16,6 +17,7 @@ namespace Alloy::Internal
 		std::vector<std::unique_ptr<Plugin>> Plugins;
 		Scheduler Scheduler;
 		ResourceList ResourceList;
+		CommandList CommandList;
 
 		Scene Scene;
 	};

@@ -2,65 +2,10 @@
 #include "AlloyCore/standard.hpp"
 
 #include "AlloyCore/app/AppState.hpp"
-
-namespace Alloy::Internal
-{
-	class CommandList;
-
-	using CommandFunction = std::function<void(CommandList&, AppState&)>;
-
-	struct FutureEntityID
-	{
-		EntityID ID;
-
-		FutureEntityID(EntityID id)
-			: ID(id)
-		{}
-	};
-
-	class CommandList
-	{
-	public:
-		void Run(AppState& appState)
-		{
-			for (auto& command : m_Commands)
-			{
-				command(*this, appState);
-			}
-		}
-
-		size_t CreateFutureEntityID(EntityID id = NullEntity)
-		{
-			m_FutureEntityIDs.emplace_back(id);
-
-			return m_FutureEntityIDs.size() - 1;
-		}
-
-		FutureEntityID& GetFutureEntityID(size_t index)
-		{
-			return m_FutureEntityIDs[index];
-		}
-
-		void SetFutureEntityID(size_t index, EntityID id)
-		{
-			m_FutureEntityIDs[index].ID = id;
-		}
-
-		void AddCommand(CommandFunction commandFunc)
-		{
-			m_Commands.emplace_back(commandFunc);
-		}
-
-	private:
-		std::vector<FutureEntityID> m_FutureEntityIDs;
-		std::vector<CommandFunction> m_Commands;
-	};
-}
-
+#include "CommandList.hpp"
 
 namespace Alloy
 {
-	class EntityCommands;
 
 	/// <summary>
 	/// Commands allow you to create/remove resources, entities and components.
@@ -137,7 +82,6 @@ namespace Alloy
 
 		// add the command to the list
 		// we capture the future entity id index so we can set it when the command is executed
-		// TODO: since this is the only capture, make custom class instead of std::function?
 		m_CommandList.AddCommand([futureEntityIDIndex](Internal::CommandList& commandList, Internal::AppState& appState)
 			{
 				// spawn an entity
