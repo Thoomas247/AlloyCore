@@ -94,6 +94,11 @@ project "Test"
 
 	targetdir ("bin/" .. OUTPUT_DIR .. "/%{prj.name}")
 	objdir ("int/" .. OUTPUT_DIR .. "/%{prj.name}")
+
+	links
+	{
+		"AlloyCore"
+	}
 	
 	files
 	{

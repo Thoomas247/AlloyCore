@@ -31,6 +31,8 @@ namespace Alloy::Internal
 		std::vector<size_t> ComponentReads;
 		std::vector<size_t> ComponentWrites;
 
+		bool HasCommands = false;
+
 	public:
 		template <typename T>
 		struct SystemInputType
@@ -42,6 +44,12 @@ namespace Alloy::Internal
 		struct SystemInputType<Query<Ts...>>
 		{
 			using Type = Query<Ts...>;
+		};
+
+		template <>
+		struct SystemInputType<Commands>
+		{
+			using Type = Commands;
 		};
 
 		/// <summary>
@@ -58,9 +66,9 @@ namespace Alloy::Internal
 			}
 
 			// commands
-			else if constexpr (requires() { T::IsCommands(); })
+			else if constexpr (std::is_same_v<T, Commands>)
 			{
-				// TODO: implement
+				return appState.CommandBufferPool.CreateCommands(appState);
 			}
 
 			// resources
@@ -93,16 +101,32 @@ namespace Alloy::Internal
 				}
 			}
 
-			// resource read
-			else if constexpr (std::is_const_v<T>)
+			// commands
+			else if constexpr (std::is_same_v<T, Commands>)
 			{
-				inputs.ResourceReads.push_back(ResType::ID<T>());
+				inputs.HasCommands = true;
 			}
 
-			// resource write
+			// resources
+			else if constexpr (std::is_base_of_v<Resource, TypeID::Stripped<T>>)
+			{
+				// read
+				if constexpr (std::is_const_v<T>)
+				{
+					inputs.ResourceReads.push_back(ResType::ID<T>());
+				}
+
+				// write
+				else
+				{
+					inputs.ResourceWrites.push_back(ResType::ID<T>());
+				}
+			}
+
+			// invalid
 			else
 			{
-				inputs.ResourceWrites.push_back(ResType::ID<T>());
+				ASSERT(false, "Not a valid input type!");
 			}
 		}
 
@@ -115,6 +139,12 @@ namespace Alloy::Internal
 			SystemInputs systemInputs;
 
 			(Declare<Inputs>(systemInputs), ...);
+
+			// check if system uses commands
+			if (systemInputs.HasCommands)
+			{
+				stageInputs.NumCommands += 1;
+			}
 
 			// check if new system writes to a resource already being read from or written to
 			for (auto& resWriteID : systemInputs.ResourceWrites)

@@ -56,7 +56,7 @@ namespace Alloy
 		}
 	}
 
-#undef ERROR	// undefine ERROR macro, as it conflicts with the ERROR function below
+#undef ERROR	// undefine standard ERROR macro, as it conflicts with the ERROR function below
 
 	/// <summary>
 	/// Debug-only error logging.

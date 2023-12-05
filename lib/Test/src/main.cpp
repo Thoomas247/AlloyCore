@@ -40,7 +40,7 @@ void TestSystem3(Alloy::AppStatus& appStatus, Alloy::Query<TestComponent> query)
 	appStatus.Running = false;
 }
 
-void TestSystem4(Alloy::Query<const TestComponent> query, const TestResource& resource)
+void TestSystem4(Alloy::Query<const TestComponent> query)
 {
 	for (auto entity : query)
 	{
@@ -50,6 +50,11 @@ void TestSystem4(Alloy::Query<const TestComponent> query, const TestResource& re
 	}
 }
 
+void TestSystem5(Alloy::Commands commands)
+{
+	for (int i = 0; i < 10; i++)
+		commands.SpawnEntity().AddComponent<TestComponent>(1, 2);
+}
 
 class TestPlugin : public Alloy::Plugin
 {
@@ -62,28 +67,13 @@ public:
 		app.AddSystem(Alloy::ScheduleID::Update, "Update", TestSystem2);
 		app.AddSystem(Alloy::ScheduleID::Update, "Update", TestSystem3);
 		app.AddSystem(Alloy::ScheduleID::Shutdown, "Shutdown", TestSystem4);
+		app.AddSystem(Alloy::ScheduleID::Startup, "Startup", TestSystem5);
 	}
 };
-
-
-#include "AlloyCore/commands/Commands.hpp"
 
 int main()
 {
 	Alloy::Application app;
-
-	/*--------------------------------------------------------*/
-	Alloy::Internal::AppState appState;
-	appState.ResourceList.AddResource<TestResource>();
-
-	Alloy::Internal::CommandList commandList;
-	Alloy::Commands commands = Alloy::Commands(commandList, appState);
-
-	commands.SpawnEntity().AddComponent<TestComponent>(10, 20);
-
-	commandList.Run(appState);
-
-	/*--------------------------------------------------------*/
 
 	app.AddPlugin<TestPlugin>();
 
