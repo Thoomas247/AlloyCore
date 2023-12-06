@@ -23,10 +23,10 @@ namespace Alloy
 	template<typename Component, typename... Args>
 	void EntityCommands::AddComponent(Args... args)
 	{
-		m_CommandBuffer.AddCommand([=](Internal::CommandBuffer& commandBuffer, Internal::AppState& appState)
+		m_CommandBuffer.AddCommand([=, futureEntityIDIndex = m_FutureEntityIDIndex](Internal::CommandBuffer& commandBuffer, Internal::AppState& appState)
 			{
 				// get the future entity id
-				EntityID id = commandBuffer.GetFutureEntityID(m_FutureEntityIDIndex).ID;
+				EntityID id = commandBuffer.GetFutureEntityID(futureEntityIDIndex).ID;
 
 				// add the component
 				appState.Scene.AddComponent<Component>(id, args...);

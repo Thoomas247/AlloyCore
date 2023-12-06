@@ -53,7 +53,10 @@ void TestSystem4(Alloy::Query<const TestComponent> query)
 void TestSystem5(Alloy::Commands commands)
 {
 	for (int i = 0; i < 10; i++)
-		commands.SpawnEntity().AddComponent<TestComponent>(1, 2);
+	{
+		Alloy::EntityCommands entityCommands = commands.SpawnEntity();
+		entityCommands.AddComponent<TestComponent>(1, i);
+	}
 }
 
 class TestPlugin : public Alloy::Plugin

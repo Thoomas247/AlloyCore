@@ -1,7 +1,7 @@
 #pragma once
 #include "AlloyCore/standard.hpp"
 
-namespace Alloy
+namespace Alloy::Internal
 {
 	/// <summary>
 	/// Provides a unique ID for each type T supplied to the ID() function.
@@ -14,6 +14,15 @@ namespace Alloy
 	public:
 		template <class T>
 		using Stripped = std::remove_const_t<std::remove_reference_t<std::remove_const_t<T>>>;
+
+		/// <summary>
+		/// To check if a template instantiation is an instance of a template.
+		/// </summary>
+		template <class, template <class, class...> class>
+		struct IsInstance : public std::false_type {};
+
+		template <class...Ts, template <class, class...> class U>
+		struct IsInstance<U<Ts...>, U> : public std::true_type {};
 
 		template <class T>
 		static size_t ID()
