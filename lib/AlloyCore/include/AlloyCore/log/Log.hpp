@@ -1,44 +1,28 @@
 #pragma once
 #include "AlloyCore/standard.hpp"
 
-#include "spdlog/SpdLogLog.hpp"
+namespace Alloy::Internal
+{
+	// forward declarations
+	class SpdLogLog;
+}
 
 namespace Alloy
 {
-
 	/// <summary>
 	/// Provides logging capabilities.
 	/// </summary>
 	class Log
 	{
 	public:
-		static void Fatal(const std::string& msg)
-		{
-			s_Instance->Fatal(msg);
-		}
-
-		static void Error(const std::string& msg)
-		{
-			s_Instance->Error(msg);
-		}
-
-		static void Warn(const std::string& msg)
-		{
-			s_Instance->Warn(msg);
-		}
-
-		static void Info(const std::string& msg)
-		{
-			s_Instance->Info(msg);
-		}
-
-		static void Trace(const std::string& msg)
-		{
-			s_Instance->Trace(msg);
-		}
+		static void Fatal(const std::string& msg);
+		static void Error(const std::string& msg);
+		static void Warn(const std::string& msg);
+		static void Info(const std::string& msg);
+		static void Trace(const std::string& msg);
 
 	private:
-		inline static std::unique_ptr<Internal::SpdLogLog> s_Instance = std::make_unique<Internal::SpdLogLog>();
+		static std::unique_ptr<Internal::SpdLogLog> s_Instance;
 	};
 
 #ifndef AL_DIST

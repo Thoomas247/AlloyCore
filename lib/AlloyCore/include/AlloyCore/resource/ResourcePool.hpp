@@ -12,9 +12,12 @@ namespace Alloy::Internal
 	/// Stores all resources used by an Application.
 	/// Each resource must have a unique type.
 	/// </summary>
-	class ResourceList
+	class ResourcePool
 	{
 	public:
+		ResourcePool() = default;
+		~ResourcePool() = default;
+
 		/// <summary>
 		/// Add a resource to the list.
 		/// If the given resource exists, it is overriden.

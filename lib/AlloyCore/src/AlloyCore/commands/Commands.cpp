@@ -1,6 +1,6 @@
-#include "Commands.hpp"
+#include "AlloyCore/commands/Commands.hpp"
 
-#include "EntityCommands.hpp"
+#include "AlloyCore/commands/EntityCommands.hpp"
 
 namespace Alloy
 {

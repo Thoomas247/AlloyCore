@@ -31,64 +31,24 @@ namespace Alloy
 		std::vector<EntityID> ChildrenIDs;
 	};
 
+}
+
+namespace Alloy::Internal
+{
 	/// <summary>
 	/// Scenes hold all the entities and components for a specific level or area of the game.
 	/// </summary>
 	class Scene
 	{
 	public:
-		Scene()
-			: m_ComponentRegistry()
-			, m_RootEntityID(NullEntity)
-		{
-			m_RootEntityID = createEntityWithBaseComponents();
-		}
-
+		Scene();
 		~Scene() = default;
 
-		EntityID SpawnEntity()
-		{
-			return SpawnChildEntity(m_RootEntityID);
-		}
+		EntityID SpawnEntity();
+		EntityID SpawnChildEntity(EntityID parentID);
+		void DespawnEntity(EntityID id);
 
-		EntityID SpawnChildEntity(EntityID parentID)
-		{
-			EntityID id = createEntityWithBaseComponents();
-
-			SetParent(id, parentID);
-
-			return id;
-		}
-
-		void DespawnEntity(EntityID id)
-		{
-			m_ComponentRegistry.RemoveEntity(id);
-		}
-
-		void SetParent(EntityID childID, EntityID parentID)
-		{
-			auto& parentComponent = m_ComponentRegistry.GetComponent<Parent>(childID);
-
-			// get old parent
-			EntityID oldParentID = parentComponent.ParentID;
-
-			// check if not the same as new parent
-			if (oldParentID == parentID)
-				return;
-
-			// remove from old parent's children list
-			if (oldParentID != NullEntity)
-			{
-				auto& children = m_ComponentRegistry.GetComponent<Children>(oldParentID).ChildrenIDs;
-				std::erase(children, childID);
-			}
-
-			// set new parent
-			parentComponent.ParentID = parentID;
-
-			// add to new parent's children list
-			m_ComponentRegistry.GetComponent<Children>(parentID).ChildrenIDs.push_back(childID);
-		}
+		void SetParent(EntityID childID, EntityID parentID);
 
 		template <typename Query>
 		Query GetQuery()
@@ -109,16 +69,7 @@ namespace Alloy
 		}
 
 	private:
-		EntityID createEntityWithBaseComponents()
-		{
-			EntityID id = m_ComponentRegistry.CreateEntityID();
-
-			// add hierarchy components
-			m_ComponentRegistry.AddComponent<Parent>(id);
-			m_ComponentRegistry.AddComponent<Children>(id);
-
-			return id;
-		}
+		EntityID createEntityWithBaseComponents();
 
 	private:
 		EntityID m_RootEntityID;

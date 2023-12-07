@@ -1,6 +1,6 @@
-#include "CommandBufferPool.hpp"
+#include "AlloyCore/commands/CommandBufferPool.hpp"
 
-#include "Commands.hpp"
+#include "AlloyCore/commands/Commands.hpp"
 
 namespace Alloy::Internal
 {

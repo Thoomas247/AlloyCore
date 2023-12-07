@@ -1,4 +1,4 @@
-#include "Stage.hpp"
+#include "AlloyCore/scheduler/Stage.hpp"
 
 #include "AlloyCore/app/AppState.hpp"
 

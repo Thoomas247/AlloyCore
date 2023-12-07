@@ -5,7 +5,7 @@
 #include "StageInputs.hpp"
 #include "AlloyCore/ecs/Query.hpp"
 #include "AlloyCore/ecs/ComponentRegistry.hpp"
-#include "AlloyCore/resource/ResourceList.hpp"
+#include "AlloyCore/resource/ResourcePool.hpp"
 
 namespace Alloy
 {

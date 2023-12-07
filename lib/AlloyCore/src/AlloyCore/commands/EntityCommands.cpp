@@ -1,4 +1,4 @@
-#include "EntityCommands.hpp"
+#include "AlloyCore/commands/EntityCommands.hpp"
 
 namespace Alloy
 {
