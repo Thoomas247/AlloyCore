@@ -10,6 +10,8 @@ namespace Alloy
 
 		void SetParent(EntityID parentID);
 
+		void Destroy();
+
 		template<typename Component, typename... Args>
 		void AddComponent(Args... args);
 
@@ -36,10 +38,10 @@ namespace Alloy
 	template<typename Component>
 	void EntityCommands::RemoveComponent()
 	{
-		m_CommandBuffer.AddCommand([=](Internal::CommandBuffer& commandBuffer, Internal::AppState& appState)
+		m_CommandBuffer.AddCommand([=, futureEntityIDIndex = m_FutureEntityIDIndex](Internal::CommandBuffer& commandBuffer, Internal::AppState& appState)
 			{
 				// get the future entity id
-				EntityID id = commandBuffer.GetFutureEntityID(m_FutureEntityIDIndex).ID;
+				EntityID id = commandBuffer.GetFutureEntityID(futureEntityIDIndex).ID;
 
 				// remove the component
 				appState.Scene.RemoveComponent<Component>(id);

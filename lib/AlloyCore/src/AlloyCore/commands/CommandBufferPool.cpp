@@ -14,6 +14,8 @@ namespace Alloy::Internal
 	{
 		m_CommandBuffers.clear();
 		m_CommandBuffers.resize(numBuffers);
+
+		m_CurrentBufferIndex = 0;
 	}
 
 	void CommandBufferPool::RunAll(AppState& appState)

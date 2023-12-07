@@ -6,23 +6,31 @@ namespace Alloy
 
 	Application::Application()
 	{
-		// add default stages
-		AddStage(ScheduleID::Startup, DEFAULT_STARTUP_STAGE);
-		AddStage(ScheduleID::Update, DEFAULT_UPDATE_STAGE);
-		AddStage(ScheduleID::Render, DEFAULT_RENDER_STAGE);
-		AddStage(ScheduleID::Shutdown, DEFAULT_SHUTDOWN_STAGE);
-
-		// add default resources
-		AddResource<AppStatus>();
 	}
 
 	void Application::Run()
 	{
+		// add default stages
+		m_State.Scheduler.AddStage(ScheduleID::Startup, DEFAULT_STARTUP_STAGE);
+		m_State.Scheduler.AddStage(ScheduleID::Update, DEFAULT_UPDATE_STAGE);
+		m_State.Scheduler.AddStage(ScheduleID::Render, DEFAULT_RENDER_STAGE);
+		m_State.Scheduler.AddStage(ScheduleID::Shutdown, DEFAULT_SHUTDOWN_STAGE);
+
+		// add default resources
+		m_State.ResourceList.AddResource<AppStatus>();
+
+		// reset the command buffer pool with enough commands for all plugins
+		m_State.CommandBufferPool.Reset(m_State.Plugins.size());
+
 		// build plugins
+		// TODO: multithread this?
 		for (auto& plugin : m_State.Plugins)
 		{
-			plugin->Build(*this);
+			plugin->Build(m_State.CommandBufferPool.CreateCommands(m_State));
 		}
+
+		// run the commands
+		m_State.CommandBufferPool.RunAll(m_State);
 
 		// run startup schedule
 		m_State.Scheduler.Run(ScheduleID::Startup, m_State);
@@ -38,20 +46,5 @@ namespace Alloy
 
 		// run shutdown schedule
 		m_State.Scheduler.Run(ScheduleID::Shutdown, m_State);
-	}
-
-	void Application::AddStage(ScheduleID scheduleID, std::string_view stageName)
-	{
-		m_State.Scheduler.AddStage(scheduleID, stageName);
-	}
-
-	void Application::AddStageAfter(ScheduleID scheduleID, std::string_view stageName, std::string_view after)
-	{
-		m_State.Scheduler.AddStageAfter(scheduleID, stageName, after);
-	}
-
-	void Application::AddStageBefore(ScheduleID scheduleID, std::string_view stageName, std::string_view before)
-	{
-		m_State.Scheduler.AddStageBefore(scheduleID, stageName, before);
 	}
 }

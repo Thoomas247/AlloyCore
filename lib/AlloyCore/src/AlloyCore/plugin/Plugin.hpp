@@ -1,13 +1,15 @@
 #pragma once
 #include "AlloyCore/standard.hpp"
 
+//#include "AlloyCore/commands/Commands.hpp"
+
 namespace Alloy
 {
-	class Application;
+	class Commands;
 
 	class Plugin
 	{
 	public:
-		virtual void Build(Application& app) = 0;
+		virtual void Build(Commands commands) = 0;
 	};
 }
