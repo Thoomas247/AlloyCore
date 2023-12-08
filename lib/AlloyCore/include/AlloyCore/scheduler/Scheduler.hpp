@@ -1,8 +1,9 @@
 #pragma once
 #include "AlloyCore/standard.hpp"
 
-#include "AlloyCore/log/Log.hpp"
+#include "AlloyCore/commands/CommandBufferPool.hpp"
 #include "AlloyCore/resource/Resource.hpp"
+#include "AlloyCore/log/Log.hpp"
 #include "System.hpp"
 #include "Stage.hpp"
 #include "Schedule.hpp"
@@ -29,6 +30,8 @@ namespace Alloy
 
 namespace Alloy::Internal
 {
+	// forward declarations
+	struct AppState;
 
 	/// <summary>
 	/// Manages systems and when they are executed.
@@ -39,35 +42,23 @@ namespace Alloy::Internal
 		/// <summary>
 		/// Runs the given schedule.
 		/// </summary>
-		void Run(ScheduleID scheduleID)
-		{
-			m_Schedules[(size_t)scheduleID].Run();
-		}
+		void Run(ScheduleID scheduleID, AppState& appState);
 
 		/// <summary>
 		/// Adds a stage to the end of given schedule.
 		/// The new stage must not already exist.
 		/// </summary>
-		void AddStage(ScheduleID scheduleID, std::string_view stageName)
-		{
-			m_Schedules[(size_t)scheduleID].AddStage(stageName);
-		}
+		void AddStage(ScheduleID scheduleID, std::string_view stageName);
 
 		/// <summary>
 		/// Adds a stage to the given schedule after the given stage.
 		/// </summary>
-		void AddStageAfter(ScheduleID scheduleID, std::string_view stageName, std::string_view after)
-		{
-			m_Schedules[(size_t)scheduleID].AddStageAfter(stageName, after);
-		}
+		void AddStageAfter(ScheduleID scheduleID, std::string_view stageName, std::string_view after);
 
 		/// <summary>
 		/// Adds a stage to the given schedule before the given stage.
 		/// </summary>
-		void AddStageBefore(ScheduleID scheduleID, std::string_view stageName, std::string_view before)
-		{
-			m_Schedules[(size_t)scheduleID].AddStageBefore(stageName, before);
-		}
+		void AddStageBefore(ScheduleID scheduleID, std::string_view stageName, std::string_view before);
 
 		/// <summary>
 		/// Adds a system to the given stage in the given schedule.

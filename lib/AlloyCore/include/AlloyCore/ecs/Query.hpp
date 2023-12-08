@@ -80,8 +80,6 @@ namespace Alloy
 		EnttAccessor m_Accessor;
 
 	private:
-		static constexpr void IsQuery() {}	// used by SystemInputs
-
 		static constexpr std::vector<size_t> GetReadIDs()	// used by SystemInputs
 		{
 			return { getIDIfRead<Components>()... };
@@ -96,7 +94,7 @@ namespace Alloy
 		static constexpr size_t getIDIfRead()
 		{
 			if constexpr (std::is_const_v<T>)
-				return CompID::ID<T>();
+				return Internal::CompID::ID<T>();
 			else
 				return (size_t)-1;
 		}
@@ -105,7 +103,7 @@ namespace Alloy
 		static constexpr size_t getIDIfWrite()
 		{
 			if constexpr (!std::is_const_v<T>)
-				return CompID::ID<T>();
+				return Internal::CompID::ID<T>();
 			else
 				return (size_t)-1;
 		}

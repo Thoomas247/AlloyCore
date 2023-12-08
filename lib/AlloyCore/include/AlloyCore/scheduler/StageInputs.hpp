@@ -13,5 +13,7 @@ namespace Alloy::Internal
 
 		std::unordered_set<size_t> EventReads;
 		std::unordered_set<size_t> EventWrites;
+
+		size_t NumCommands = 0;
 	};
 }

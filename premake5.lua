@@ -17,7 +17,7 @@ workspace ("AlloyCore_workspace")
 -- Include Directories Table --
 IncludeDirs = {}
 
-IncludeDirs["Plugin"] = "lib/AlloyCore/src"
+IncludeDirs["Plugin"] = "lib/AlloyCore/include"
 IncludeDirs["External"] = "lib/AlloyCore/external"
 IncludeDirs["Test"] = "lib/Test/src"
 
@@ -94,6 +94,11 @@ project "Test"
 
 	targetdir ("bin/" .. OUTPUT_DIR .. "/%{prj.name}")
 	objdir ("int/" .. OUTPUT_DIR .. "/%{prj.name}")
+
+	links
+	{
+		"AlloyCore"
+	}
 	
 	files
 	{

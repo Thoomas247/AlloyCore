@@ -1,6 +1,7 @@
 #pragma once
 #include "AlloyCore/standard.hpp"
 
+#include "AlloyCore/commands/CommandBufferPool.hpp"
 #include "System.hpp"
 #include "StageInputs.hpp"
 
@@ -23,19 +24,10 @@ namespace Alloy::Internal
 	class Stage
 	{
 	public:
-		Stage(std::string_view name)
-			: m_Name(name)
-		{
-		}
+		Stage(std::string_view name);
 
-		const std::string_view& GetName() const { return m_Name; }
-
-		void Run()
-		{
-			std::for_each(std::execution::par, m_Systems.begin(), m_Systems.end(), [](auto& system) {
-				system();
-				});
-		}
+		const std::string_view& GetName() const;
+		void Run(AppState& appState);
 
 		template <typename... Args>
 		void AddSystem(AppState& appState, System<Args...> system)
